@@ -3,6 +3,7 @@
 		//BLACK MAGIC THINGS//
 		//////////////////////
 	parent_type = /datum
+	var/global/obj/screen/click_catcher/void = null
 		////////////////
 		//ADMIN THINGS//
 		////////////////

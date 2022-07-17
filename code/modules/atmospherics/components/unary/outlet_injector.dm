@@ -44,6 +44,8 @@
 	. = ..()
 
 /obj/machinery/atmospherics/unary/outlet_injector/on_update_icon()
+	..()
+
 	if (!node)
 		update_use_power(POWER_USE_OFF)
 

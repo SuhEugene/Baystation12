@@ -14,7 +14,7 @@
 	construct_state = /decl/machine_construction/default/panel_closed
 	uncreated_component_parts = null
 	stat_immune = 0
-	
+
 	machine_name = "gas cooling system"
 	machine_desc = "While active, this machine cools the gas in a connected pipeline to lower temperatures. Gas pressure decreases with chilling, allowing it to be compressed more easily."
 
@@ -49,6 +49,8 @@
 	update_icon()
 
 /obj/machinery/atmospherics/unary/freezer/on_update_icon()
+	..()
+
 	if(node)
 		if(use_power && cooling)
 			icon_state = "freezer_1"

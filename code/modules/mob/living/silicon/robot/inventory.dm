@@ -221,6 +221,8 @@
 		O.hud_layerise()
 		O.screen_loc = inv1.screen_loc
 		O.forceMove(src)
+		O.layer = HUD_ABOVE_ITEM_LAYER
+		O.plane = HUD_ABOVE_PLANE
 		if(istype(module_state_1,/obj/item/borg/sight))
 			sight_mode |= module_state_1:sight_mode
 	else if(!module_state_2)
@@ -228,6 +230,8 @@
 		O.hud_layerise()
 		O.screen_loc = inv2.screen_loc
 		O.forceMove(src)
+		O.layer = HUD_ABOVE_ITEM_LAYER
+		O.plane = HUD_ABOVE_PLANE
 		if(istype(module_state_2,/obj/item/borg/sight))
 			sight_mode |= module_state_2:sight_mode
 	else if(!module_state_3)
@@ -235,6 +239,8 @@
 		O.hud_layerise()
 		O.screen_loc = inv3.screen_loc
 		O.forceMove(src)
+		O.layer = HUD_ABOVE_ITEM_LAYER
+		O.plane = HUD_ABOVE_PLANE
 		if(istype(module_state_3,/obj/item/borg/sight))
 			sight_mode |= module_state_3:sight_mode
 	else

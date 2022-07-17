@@ -200,6 +200,17 @@ var/list/_client_preferences_by_type
 	options = list(GLOB.PREF_FANCY, GLOB.PREF_PLAIN)
 
 //[INF]
+/datum/client_preference/ambient_occlusion
+	description = "Ambient Occlusion"
+	key = "AMBIENT_OCCLUSION"
+	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
+	default_value = GLOB.PREF_YES
+
+/datum/client_preference/ambient_occlusion/changed(mob/pmob, new_value)
+	if(pmob.client && pmob.client.screen && pmob.client.screen.len)
+		var/obj/screen/plane_master/game_world/PM = locate(/obj/screen/plane_master/game_world) in pmob.client.screen
+		PM.backdrop(pmob)
+
 /datum/client_preference/floating_messages
 	description = "Floating chat messages"
 	key = "FLOATING_CHAT"

@@ -81,6 +81,9 @@
 	. = ..()
 
 /obj/machinery/atmospherics/binary/double_pump/on_update_icon(var/safety = 0)
+	..()
+	plane = FLOOR_PLANE
+
 	if(!check_icon_cache())
 		return
 	if (!node1 && !node2)

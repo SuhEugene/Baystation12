@@ -255,6 +255,9 @@
 		prefs?.apply_post_login_preferences()
 //[/INF]
 
+	generate_clickcatcher()
+	apply_clickcatcher()
+
 	if(SSinput.initialized)
 		set_macros()
 
@@ -570,3 +573,13 @@ client/verb/character_setup()
 
 		to_chat(usr, "<span class='darkmblue'>Для завершения используйте команду <span class='boldannounce'>!привязать_аккаунт [token]</span> в канале <b>#дом-бота<b> в Discord-сообществе!</span>")
 		load_player_discord(usr)
+
+/client/proc/generate_clickcatcher()
+	if(!void)
+		void = new()
+		screen += void
+
+/client/proc/apply_clickcatcher()
+	generate_clickcatcher()
+	var/list/actualview = getviewsize(view)
+	void.UpdateGreed(actualview[1],actualview[2])

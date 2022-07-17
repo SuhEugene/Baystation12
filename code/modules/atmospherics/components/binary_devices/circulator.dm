@@ -74,6 +74,8 @@
 		update_icon()
 
 /obj/machinery/atmospherics/binary/circulator/on_update_icon()
+	..()
+
 	icon_state = anchored ? "circ-assembled" : "circ-unassembled"
 	overlays.Cut()
 	if (stat & (BROKEN|NOPOWER) || !anchored)

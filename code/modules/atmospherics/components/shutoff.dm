@@ -16,6 +16,8 @@
 	build_icon_state = "svalve"
 
 /obj/machinery/atmospherics/valve/shutoff/on_update_icon()
+	..()
+
 	icon_state = "vclamp[icon_connect_type]"
 	overlays.Cut()
 	if (!close_on_leaks)

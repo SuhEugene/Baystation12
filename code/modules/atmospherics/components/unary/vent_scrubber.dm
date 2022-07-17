@@ -63,6 +63,9 @@
 	icon = null
 
 /obj/machinery/atmospherics/unary/vent_scrubber/on_update_icon(var/safety = 0)
+	..()
+	plane = FLOOR_PLANE
+
 	if(!check_icon_cache())
 		return
 

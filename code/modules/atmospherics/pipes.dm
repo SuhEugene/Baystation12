@@ -263,6 +263,8 @@
 		node2.update_underlays()
 
 /obj/machinery/atmospherics/pipe/simple/on_update_icon(var/safety = 0)
+	..()
+
 	if(!atmos_initalized)
 		return
 	if(!check_icon_cache())
@@ -508,6 +510,8 @@
 		node3.update_underlays()
 
 /obj/machinery/atmospherics/pipe/manifold/on_update_icon(var/safety = 0)
+	..()
+
 	if(!atmos_initalized)
 		return
 	if(!check_icon_cache())
@@ -770,6 +774,8 @@
 		node4.update_underlays()
 
 /obj/machinery/atmospherics/pipe/manifold4w/on_update_icon(var/safety = 0)
+	..()
+
 	if(!atmos_initalized)
 		return
 	if(!check_icon_cache())
@@ -1003,6 +1009,8 @@
 		node.update_underlays()
 
 /obj/machinery/atmospherics/pipe/cap/on_update_icon(var/safety = 0)
+	..()
+
 	if(!check_icon_cache())
 		return
 
@@ -1118,6 +1126,8 @@
 	return list(node1)
 
 /obj/machinery/atmospherics/pipe/vent/on_update_icon()
+	..()
+
 	if(node1)
 		icon_state = "intact"
 
@@ -1164,6 +1174,8 @@
 	build_icon_state = "universal"
 
 /obj/machinery/atmospherics/pipe/simple/visible/universal/on_update_icon(var/safety = 0)
+	..()
+
 	if(!check_icon_cache())
 		return
 
@@ -1199,6 +1211,8 @@
 	icon_state = "map_universal"
 
 /obj/machinery/atmospherics/pipe/simple/hidden/universal/on_update_icon(var/safety = 0)
+	..()
+
 	if(!check_icon_cache())
 		return
 

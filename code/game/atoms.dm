@@ -1,4 +1,6 @@
 /atom
+	layer = TURF_LAYER
+	plane = GAME_PLANE
 	var/level = 2
 	var/atom_flags = ATOM_FLAG_NO_TEMP_CHANGE
 	var/list/blood_DNA

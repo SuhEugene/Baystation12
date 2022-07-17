@@ -27,6 +27,8 @@
 	build_icon_state = "map_tvalve0"
 
 /obj/machinery/atmospherics/tvalve/on_update_icon(animation)
+	..()
+
 	if(animation)
 		flick("tvalve[src.state][!src.state]",src)
 	else
@@ -317,10 +319,10 @@
 		"valve_toggle" = /decl/public_access/public_method/tvalve_toggle
 	)
 
-//Mirrored editions		
+//Mirrored editions
 /obj/machinery/atmospherics/tvalve/mirrored
 	icon_state = "map_tvalvem0"
-	
+
 	connect_dir_type = SOUTH | EAST | NORTH
 	build_icon_state = "map_tvalvem0"
 
@@ -339,6 +341,8 @@
 
 
 /obj/machinery/atmospherics/tvalve/mirrored/on_update_icon(animation)
+	..()
+
 	if(animation)
 		flick("tvalvem[src.state][!src.state]",src)
 	else
@@ -349,7 +353,7 @@
 	desc = "A digitally controlled valve."
 	icon = 'icons/atmos/digital_tvalve.dmi'
 	icon_state = "map_tvalve0"
-	
+
 	build_icon = 'icons/atmos/digital_tvalve.dmi'
 	build_icon_state = "map_tvalve0"
 

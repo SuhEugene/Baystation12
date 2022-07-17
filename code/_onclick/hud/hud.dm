@@ -38,6 +38,8 @@
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
 
+	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
+
 /datum/hud/New(mob/owner)
 	mymob = owner
 	instantiate()
@@ -55,6 +57,14 @@
 	other = null
 	hotkeybuttons = null
 	mymob = null
+	QDEL_LIST_ASSOC_VAL(plane_masters)
+
+/datum/hud/proc/plane_masters_update()
+	// Plane masters are always shown to OUR mob, never to observers
+	for(var/thing in plane_masters)
+		var/obj/screen/plane_master/PM = plane_masters[thing]
+		PM.backdrop(mymob)
+		mymob.client.screen += PM
 
 /datum/hud/proc/update_stamina()
 	if(mymob && stamina_bar)
@@ -162,6 +172,11 @@
 		spawn(3 SECONDS)
 			mymob.clear_fullscreen("fade", animated = 10)
 
+	for(var/mytype in subtypesof(/obj/screen/plane_master))
+		var/obj/screen/plane_master/instance = new mytype()
+		plane_masters["[instance.plane]"] = instance
+		instance.backdrop(mymob)
+
 	FinalizeInstantiation(ui_style, ui_color, ui_alpha)
 
 /datum/hud/proc/FinalizeInstantiation(var/ui_style, var/ui_color, var/ui_alpha)
@@ -228,6 +243,7 @@
 	hud_used.hidden_inventory_update()
 	hud_used.persistant_inventory_update()
 	update_action_buttons()
+	hud_used.plane_masters_update()
 
 //Similar to button_pressed_F12() but keeps zone_sel, gun_setting_icon, and healths.
 /mob/proc/toggle_zoom_hud()
@@ -265,6 +281,7 @@
 	hud_used.hidden_inventory_update()
 	hud_used.persistant_inventory_update()
 	update_action_buttons()
+	hud_used.plane_masters_update()
 
 /mob/proc/add_click_catcher()
 	client.screen |= GLOB.click_catchers

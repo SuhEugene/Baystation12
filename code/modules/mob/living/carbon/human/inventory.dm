@@ -58,6 +58,8 @@ This saves us from having to call add_fingerprint() any time something is put in
 		return 0
 	equip_to_slot(W,slot_l_hand)
 	W.add_fingerprint(src)
+	W.layer = HUD_ABOVE_ITEM_LAYER
+	W.plane = HUD_ABOVE_PLANE
 	return 1
 
 /mob/living/carbon/human/put_in_r_hand(var/obj/item/W)
@@ -69,6 +71,8 @@ This saves us from having to call add_fingerprint() any time something is put in
 
 	equip_to_slot(W,slot_r_hand)
 	W.add_fingerprint(src)
+	W.layer = HUD_ABOVE_ITEM_LAYER
+	W.plane = HUD_ABOVE_PLANE
 	return 1
 
 /mob/living/carbon/human/proc/has_organ(name)
@@ -235,6 +239,8 @@ This saves us from having to call add_fingerprint() any time something is put in
 	if(!has_organ_for_slot(slot)) return
 	if(!species || !species.hud || !(slot in species.hud.equip_slots)) return
 	W.forceMove(src)
+	W.layer = HUD_ABOVE_ITEM_LAYER
+	W.plane = HUD_ABOVE_PLANE
 
 	var/obj/item/old_item = get_equipped_item(slot)
 
@@ -344,6 +350,8 @@ This saves us from having to call add_fingerprint() any time something is put in
 			if(src.get_active_hand() == W)
 				src.remove_from_mob(W)
 			W.forceMove(src.back)
+			W.layer = HUD_ABOVE_ITEM_LAYER
+			W.plane = HUD_ABOVE_PLANE
 		if(slot_tie)
 			var/obj/item/clothing/under/uniform = w_uniform
 			if (uniform)

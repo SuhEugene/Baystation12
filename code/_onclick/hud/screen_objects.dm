@@ -9,7 +9,7 @@
 /obj/screen
 	name = ""
 	icon = 'icons/mob/screen1.dmi'
-	plane = HUD_PLANE
+	plane = HUD_ABOVE_PLANE
 	layer = HUD_BASE_LAYER
 	appearance_flags = NO_CLIENT_COLOR
 	unacidable = TRUE
@@ -31,10 +31,14 @@
 
 
 /obj/screen/inventory
+	layer = HUD_BASE_LAYER
+	plane = HUD_PLANE
 	var/slot_id	//The indentifier for the slot. It has nothing to do with ID cards.
 
 
 /obj/screen/close
+	layer = HUD_BASE_LAYER
+	plane = HUD_PLANE
 	name = "close"
 
 /obj/screen/close/Click()
@@ -46,6 +50,8 @@
 
 
 /obj/screen/item_action
+	layer = HUD_BASE_LAYER
+	plane = HUD_PLANE
 	var/obj/item/owner
 
 /obj/screen/item_action/Destroy()
@@ -69,6 +75,8 @@
 
 /obj/screen/storage
 	name = "storage"
+	layer = HUD_BASE_LAYER
+	plane = HUD_PLANE
 
 /obj/screen/storage/Click()
 	if(!usr.canClick())
@@ -85,6 +93,8 @@
 	name = "damage zone"
 	icon_state = "zone_sel"
 	screen_loc = ui_zonesel
+	layer = HUD_BASE_LAYER
+	plane = HUD_PLANE
 	var/selecting = BP_CHEST
 
 /obj/screen/zone_sel/Click(location, control,params)
@@ -167,6 +177,8 @@
 	icon = 'icons/mob/screen1_White.dmi'
 	icon_state = "intent_help"
 	screen_loc = ui_acti
+	layer = HUD_BASE_LAYER
+	plane = HUD_PLANE
 	var/intent = I_HELP
 
 /obj/screen/intent/Click(var/location, var/control, var/params)
@@ -419,4 +431,3 @@
 
 /obj/screen/health/Click(var/location, var/control, var/params)
 	usr.Click(usr, params)
-

@@ -7,6 +7,7 @@
 	var/global/global_uid = 0
 	var/uid
 	var/area_flags
+	plane = BLACKNESS_PLANE //Keeping this on the default plane, GAME_PLANE, will make area overlays fail to render on FLOOR_PLANE.
 
 /area/New()
 	icon_state = ""

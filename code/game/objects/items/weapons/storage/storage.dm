@@ -9,6 +9,7 @@
 	name = "storage"
 	icon = 'icons/obj/storage.dmi'
 	w_class = ITEM_SIZE_NORMAL
+
 	var/list/can_hold = new/list() //List of objects which this item can store (if set, it can't store anything else)
 	var/list/cant_hold = new/list() //List of objects which this item can't store (in effect only if can_hold isn't set)
 
@@ -247,7 +248,7 @@
 	if(ismob(loc))
 		W.dropped(usr)
 	if(ismob(new_location))
-		W.hud_layerise()
+		W.above_hud_layerise()
 	else
 		W.reset_plane_and_layer()
 	W.forceMove(new_location)

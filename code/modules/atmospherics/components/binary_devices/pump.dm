@@ -45,7 +45,7 @@ Thus, the two variables affect pump operation are set in New():
 	)
 	public_methods = list(
 		/decl/public_access/public_method/toggle_power,
-		/decl/public_access/public_method/refresh	
+		/decl/public_access/public_method/refresh
 	)
 	stock_part_presets = list(
 		/decl/stock_part_preset/radio/receiver/pump = 1,
@@ -70,6 +70,8 @@ Thus, the two variables affect pump operation are set in New():
 
 
 /obj/machinery/atmospherics/binary/pump/on_update_icon()
+	..()
+
 	if(!powered())
 		icon_state = "off"
 	else

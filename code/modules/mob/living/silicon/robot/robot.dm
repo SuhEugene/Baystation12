@@ -117,6 +117,8 @@
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
+	robot_modules_background.layer = HUD_BASE_LAYER	//Objects that appear on screen are on layer, UI should be just below it.
+	robot_modules_background.plane = HUD_PLANE
 	ident = random_id(/mob/living/silicon/robot, 1, 999)
 	module_sprites["Basic"] = "robot"
 	icontype = "Basic"

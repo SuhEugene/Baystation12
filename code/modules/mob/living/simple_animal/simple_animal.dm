@@ -245,6 +245,8 @@
 
 /mob/living/simple_animal/put_in_hands(var/obj/item/W) // No hands.
 	W.forceMove(get_turf(src))
+	W.layer = HUD_ABOVE_ITEM_LAYER
+	W.plane = HUD_ABOVE_PLANE
 	return 1
 
 // Harvest an animal's delicious byproducts

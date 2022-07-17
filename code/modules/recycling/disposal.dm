@@ -18,6 +18,7 @@ GLOBAL_LIST_EMPTY(diversion_junctions)
 	icon_state = "disposal"
 	anchored = TRUE
 	density = TRUE
+	layer = DISPOSALS_PIPE_LAYER
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// item mode 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled

@@ -71,6 +71,10 @@ What is the naming convention for planes or layers?
 	#define DEBRIS_LAYER                 1
 	#define DUST_LAYER                   2
 
+#define FLOOR_PLANE -2
+#define GAME_PLANE -1
+#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+
 // Openspace uses planes -80 through -70.
 
 #define OVER_OPENSPACE_PLANE        -3
@@ -189,6 +193,7 @@ What is the naming convention for planes or layers?
 	#define HUD_ITEM_LAYER               3
 	#define HUD_ABOVE_ITEM_LAYER         4
 
+#define HUD_ABOVE_PLANE 6
 
 //This is difference between planes used for atoms and effects
 #define PLANE_DIFFERENCE              3
@@ -208,6 +213,10 @@ What is the naming convention for planes or layers?
 	plane = HUD_PLANE
 	layer = HUD_ITEM_LAYER
 
+/atom/proc/above_hud_layerise()
+	plane = HUD_ABOVE_PLANE
+	layer = HUD_ABOVE_ITEM_LAYER
+
 /atom/proc/reset_plane_and_layer()
 	plane = initial(plane)
 	layer = initial(layer)
@@ -217,9 +226,41 @@ What is the naming convention for planes or layers?
 */
 
 /obj/screen/plane_master
-	appearance_flags = PLANE_MASTER
 	screen_loc = "CENTER,CENTER"
+	icon_state = "blank"
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	blend_mode = BLEND_OVERLAY
+	var/show_alpha = 255
+	var/hide_alpha = 0
 	globalscreen = 1
+
+/obj/screen/plane_master/proc/Show(override)
+	alpha = override || show_alpha
+
+/obj/screen/plane_master/proc/Hide(override)
+	alpha = override || hide_alpha
+
+//Why do plane masters need a backdrop sometimes? Read http://www.byond.com/forum/?post=2141928
+//Trust author, you need one. Period. If you don't think you do, you're doing something extremely wrong.
+/obj/screen/plane_master/proc/backdrop(mob/mymob)
+/obj/screen/plane_master/floor
+	name = "floor plane master"
+	plane = FLOOR_PLANE
+	appearance_flags = PLANE_MASTER
+	blend_mode = BLEND_OVERLAY
+
+/obj/screen/plane_master/game_world
+	name = "game world plane master"
+	plane = GAME_PLANE
+	appearance_flags = PLANE_MASTER //should use client color
+	blend_mode = BLEND_OVERLAY
+
+#define AMBIENT_OCCLUSION filter(type="drop_shadow", x = 0, y = -2, size = 4, color = "#04080FAA")
+
+/obj/screen/plane_master/game_world/backdrop(mob/mymob)
+	filters -= AMBIENT_OCCLUSION
+	if(mymob.get_preference_value(/datum/client_preference/ambient_occlusion) == GLOB.PREF_YES)
+		filters += AMBIENT_OCCLUSION
 
 /obj/screen/plane_master/ghost_master
 	plane = OBSERVER_PLANE

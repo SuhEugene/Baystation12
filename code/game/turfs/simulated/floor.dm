@@ -3,6 +3,7 @@
 	icon = 'icons/turf/flooring/plating.dmi'
 	icon_state = "plating"
 	permit_ao = TRUE
+	plane = FLOOR_PLANE
 
 	// Damage to flooring.
 	var/broken
