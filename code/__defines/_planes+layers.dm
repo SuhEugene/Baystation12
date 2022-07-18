@@ -71,9 +71,8 @@ What is the naming convention for planes or layers?
 	#define DEBRIS_LAYER                 1
 	#define DUST_LAYER                   2
 
-#define FLOOR_PLANE -2
-#define GAME_PLANE -1
-#define BLACKNESS_PLANE 0 //To keep from conflicts with SEE_BLACKNESS internals
+#define FLOOR_PLANE 0
+#define GAME_PLANE 0
 
 // Openspace uses planes -80 through -70.
 
@@ -246,21 +245,23 @@ What is the naming convention for planes or layers?
 /obj/screen/plane_master/floor
 	name = "floor plane master"
 	plane = FLOOR_PLANE
+	layer = TURF_LAYER
 	appearance_flags = PLANE_MASTER
 	blend_mode = BLEND_OVERLAY
 
-/obj/screen/plane_master/game_world
-	name = "game world plane master"
-	plane = GAME_PLANE
+/obj/screen/plane_master/ambient_occlusion
+	name = "ambient occlusion plane master"
+	plane = DEFAULT_PLANE
+	layer = AO_LAYER
 	appearance_flags = PLANE_MASTER //should use client color
 	blend_mode = BLEND_OVERLAY
 
 #define AMBIENT_OCCLUSION filter(type="drop_shadow", x = 0, y = -2, size = 4, color = "#04080FAA")
 
-/obj/screen/plane_master/game_world/backdrop(mob/mymob)
-	filters -= AMBIENT_OCCLUSION
-	if(mymob.get_preference_value(/datum/client_preference/ambient_occlusion) == GLOB.PREF_YES)
-		filters += AMBIENT_OCCLUSION
+/obj/screen/plane_master/ambient_occlusion/backdrop(mob/mymob)
+	// filters -= AMBIENT_OCCLUSION
+	// if(mymob.get_preference_value(/datum/client_preference/ambient_occlusion) == GLOB.PREF_YES)
+	filters += AMBIENT_OCCLUSION
 
 /obj/screen/plane_master/ghost_master
 	plane = OBSERVER_PLANE
