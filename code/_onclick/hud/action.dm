@@ -103,9 +103,9 @@
 	if(check_flags & AB_CHECK_STUNNED)
 		if(owner.stunned)
 			return 0
-	if(check_flags & AB_CHECK_LYING)
-		if(owner.lying)
-			return 0
+	//if(check_flags & AB_CHECK_LYING)
+	//	if(owner.lying)
+	//		return 0
 	if(check_flags & AB_CHECK_ALIVE)
 		if(owner.stat)
 			return 0

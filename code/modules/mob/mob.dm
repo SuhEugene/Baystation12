@@ -737,12 +737,14 @@
 	else
 		lying = incapacitated(INCAPACITATION_KNOCKDOWN)
 
-	if(lying)
-		set_density(0)
-		if(l_hand) unEquip(l_hand)
-		if(r_hand) unEquip(r_hand)
-	else
-		set_density(initial(density))
+	//if(lying)
+	//	set_density(0)
+	//	if(l_hand) unEquip(l_hand)
+	//	if(r_hand) unEquip(r_hand)
+	//else
+	set_density(initial(density))
+
+
 	reset_layer()
 
 	for(var/obj/item/grab/G in grabbed_by)
