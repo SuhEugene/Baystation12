@@ -96,16 +96,25 @@
 	for(var/i=1, i<=length_char(input), i++)
 		var/ascii_char = text2ascii(input,i)
 		switch(ascii_char)
-			// A  .. Z
-			if(65 to 90)			//Uppercase Letters
+			//  A .. Z      А .. Я      Ё
+			if(65 to 90, 1040 to 1071, 1025)		//Uppercase Letters
 				output += ascii2text(ascii_char)
 				number_of_alphanumeric++
 				last_char_group = 4
 
-			// a  .. z
-			if(97 to 122)			//Lowercase Letters
+			//  a .. z       а .. я
+			if(97 to 122, 1072 to 1103)			//Lowercase Letters
 				if(last_char_group<2 && force_first_letter_uppercase)
 					output += ascii2text(ascii_char-32)	//Force uppercase first character
+				else
+					output += ascii2text(ascii_char)
+				number_of_alphanumeric++
+				last_char_group = 4
+
+			//  ё
+			if (1105)
+				if(last_char_group<2 && force_first_letter_uppercase)
+					output += ascii2text(1025)	//Force uppercase first character
 				else
 					output += ascii2text(ascii_char)
 				number_of_alphanumeric++
