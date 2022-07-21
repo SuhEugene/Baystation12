@@ -95,6 +95,7 @@
 
 	for(var/i=1, i<=length_char(input), i++)
 		var/ascii_char = text2ascii(input,i)
+		world.log << "Got char [ascii_char]"
 		switch(ascii_char)
 			//  A .. Z      А .. Я      Ё
 			if(65 to 90, 1040 to 1071, 1025)		//Uppercase Letters
@@ -147,8 +148,10 @@
 				output += ascii2text(ascii_char)
 				last_char_group = 1
 			else
+				world.log << "Didn't like [ascii_char] ([input])"
 				return
 
+	
 	if(number_of_alphanumeric < 2)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
 
 	if(last_char_group == 1)
