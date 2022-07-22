@@ -40,13 +40,13 @@
 
 	stored_start = new /obj //we just need these to hold the icon
 	stored_start.icon_state = "stored_start"
-	stored_start.layer = HUD_BASE_LAYER
+	stored_start.layer = HUD_UNDER_ITEM_LAYER
 	stored_continue = new /obj
 	stored_continue.icon_state = "stored_continue"
-	stored_continue.layer = HUD_BASE_LAYER
+	stored_continue.layer = HUD_UNDER_ITEM_LAYER
 	stored_end = new /obj
 	stored_end.icon_state = "stored_end"
-	stored_end.layer = HUD_BASE_LAYER
+	stored_end.layer = HUD_UNDER_ITEM_LAYER
 
 	closer = new /obj/screen/close(  )
 	closer.master = storage
