@@ -70,6 +70,9 @@
 /obj/screen/storage
 	name = "storage"
 
+/obj/screen/storage/item
+	name = "storage item"
+
 /obj/screen/storage/Click()
 	if(!usr.canClick())
 		return 1
@@ -77,7 +80,7 @@
 		return 1
 	if(master)
 		var/obj/item/I = usr.get_active_hand()
-		if(I)
+		if(I || istype(master, /obj/screen/storage/item))
 			usr.ClickOn(master)
 	return 1
 

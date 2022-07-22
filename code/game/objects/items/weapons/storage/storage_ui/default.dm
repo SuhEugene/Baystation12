@@ -5,9 +5,9 @@
 	var/obj/screen/storage/storage_start //storage UI
 	var/obj/screen/storage/storage_continue
 	var/obj/screen/storage/storage_end
-	var/obj/screen/storage/stored_start
-	var/obj/screen/storage/stored_continue
-	var/obj/screen/storage/stored_end
+	var/obj/screen/storage/item/stored_start
+	var/obj/screen/storage/item/stored_continue
+	var/obj/screen/storage/item/stored_end
 	var/obj/screen/close/closer
 
 /datum/storage_ui/default/New(var/storage)
