@@ -22,13 +22,13 @@
 	QDEL_NULL(stored_end)
 	. = ..()
 
-/datum/three_part_slot/set_screen_loc(var/screen_loc)
+/datum/three_part_slot/proc/set_screen_loc(var/screen_loc)
 	return
 
-/datum/three_part_slot/set_transforms(var/transform_start, var/transform_continue, var/transform_end)
+/datum/three_part_slot/proc/set_transforms(var/transform_start, var/transform_continue, var/transform_end)
 	return
 
-/datum/three_part_slot/set_layer(var/layer)
+/datum/three_part_slot/proc/set_layer(var/layer)
 	return
 /datum/storage_ui
 	var/obj/item/storage/storage
