@@ -67,6 +67,18 @@
 	owner.ui_action_click()
 	return 1
 
+/obj/screen/storage_slot
+	name = "storage slot"
+
+/obj/screen/storage_slot/Click()
+	if(!usr.canClick())
+		return 1
+	if(usr.stat || usr.paralysis || usr.stunned || usr.weakened)
+		return 1
+	if(master)
+		usr.ClickOn(master)
+	return 1
+
 /obj/screen/storage
 	name = "storage"
 
@@ -419,4 +431,3 @@
 
 /obj/screen/health/Click(var/location, var/control, var/params)
 	usr.Click(usr, params)
-

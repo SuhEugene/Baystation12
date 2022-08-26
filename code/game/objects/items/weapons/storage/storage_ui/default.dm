@@ -1,54 +1,57 @@
+/datum/three_part_slot/set_transforms(var/transform_start, var/transform_continue, var/transform_end)
+	src.stored_start.transform = transform_start
+	src.stored_continue.transform = transform_continue
+	src.stored_end.transform = transform_end
+
+/datum/three_part_slot/set_layer(var/layer)
+	src.stored_start.layer = layer
+	src.stored_continue.layer = layer
+	src.stored_end.layer = layer
+
+/datum/three_part_slot/set_screen_loc(var/screen_loc)
+	src.stored_start.screen_loc = screen_loc
+	src.stored_continue.screen_loc = screen_loc
+	src.stored_end.screen_loc = screen_loc
+
 /datum/storage_ui/default
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
+	var/list/storage_slots = new/list() //List of /datum/storage_slot/default to delete when ui closed
 
 	var/obj/screen/storage/boxes
 	var/obj/screen/storage/storage_start //storage UI
 	var/obj/screen/storage/storage_continue
 	var/obj/screen/storage/storage_end
-	var/obj/screen/storage/stored_start
-	var/obj/screen/storage/stored_continue
-	var/obj/screen/storage/stored_end
 	var/obj/screen/close/closer
 
 /datum/storage_ui/default/New(var/storage)
 	..()
-	boxes = new /obj/screen/storage(  )
+	boxes = new()
 	boxes.SetName("storage")
 	boxes.master = storage
 	boxes.icon_state = "block"
 	boxes.screen_loc = "7,7 to 10,8"
 	boxes.layer = HUD_BASE_LAYER
 
-	storage_start = new /obj/screen/storage(  )
+	storage_start = new()
 	storage_start.SetName("storage")
 	storage_start.master = storage
 	storage_start.icon_state = "storage_start"
 	storage_start.screen_loc = "7,7 to 10,8"
 	storage_start.layer = HUD_BASE_LAYER
-	storage_continue = new /obj/screen/storage(  )
+	storage_continue = new()
 	storage_continue.SetName("storage")
 	storage_continue.master = storage
 	storage_continue.icon_state = "storage_continue"
 	storage_continue.screen_loc = "7,7 to 10,8"
 	storage_continue.layer = HUD_BASE_LAYER
-	storage_end = new /obj/screen/storage(  )
+	storage_end = new()
 	storage_end.SetName("storage")
 	storage_end.master = storage
 	storage_end.icon_state = "storage_end"
 	storage_end.screen_loc = "7,7 to 10,8"
 	storage_end.layer = HUD_BASE_LAYER
 
-	stored_start = new /obj //we just need these to hold the icon
-	stored_start.icon_state = "stored_start"
-	stored_start.layer = HUD_BASE_LAYER
-	stored_continue = new /obj
-	stored_continue.icon_state = "stored_continue"
-	stored_continue.layer = HUD_BASE_LAYER
-	stored_end = new /obj
-	stored_end.icon_state = "stored_end"
-	stored_end.layer = HUD_BASE_LAYER
-
-	closer = new /obj/screen/close(  )
+	closer = new()
 	closer.master = storage
 	closer.icon_state = "x"
 	closer.layer = HUD_BASE_LAYER
@@ -59,9 +62,6 @@
 	QDEL_NULL(storage_start)
 	QDEL_NULL(storage_continue)
 	QDEL_NULL(storage_end)
-	QDEL_NULL(stored_start)
-	QDEL_NULL(stored_continue)
-	QDEL_NULL(stored_end)
 	QDEL_NULL(closer)
 	. = ..()
 
@@ -77,6 +77,7 @@
 		user.s_active.show_to(user)
 
 /datum/storage_ui/default/on_pre_remove(var/mob/user, var/obj/item/W)
+	W.mouse_opacity = initial(W.mouse_opacity)
 	for(var/mob/M in range(1, storage.loc))
 		if (M.s_active == storage)
 			if (M.client)
@@ -93,9 +94,12 @@
 
 /datum/storage_ui/default/show_to(var/mob/user)
 	if(user.s_active != storage)
+		// There are items that should be activated when opening the inventory
+		// and stop it from opening
 		for(var/obj/item/I in storage)
 			if(I.on_found(user))
 				return
+
 	if(user.s_active)
 		user.s_active.hide_from(user)
 	user.client.screen -= boxes
@@ -119,6 +123,7 @@
 	is_seeing -= user
 	if(!user.client)
 		return
+	user.client.screen -= storage_slots
 	user.client.screen -= boxes
 	user.client.screen -= storage_start
 	user.client.screen -= storage_continue
@@ -183,6 +188,7 @@
 
 	for(var/obj/O in storage.contents)
 		O.screen_loc = "[cx]:16,[cy]:16"
+		O.mouse_opacity = 2
 		O.maptext = ""
 		O.hud_layerise()
 		cx++
@@ -197,9 +203,9 @@
 	var/baseline_max_storage_space = DEFAULT_BOX_STORAGE //storage size corresponding to 224 pixels
 	var/storage_cap_width = 2 //length of sprite for start and end of the box representing total storage space
 	var/stored_cap_width = 4 //length of sprite for start and end of the box representing the stored item
-	var/storage_width = min( round( 224 * storage.max_storage_space/baseline_max_storage_space ,1) ,284) //length of sprite for the box representing total storage space
+	var/storage_width = min(round(224 * storage.max_storage_space/baseline_max_storage_space, 1), 284) //length of sprite for the box representing total storage space
 
-	storage_start.overlays.Cut()
+	storage_slots.Cut()
 
 	var/matrix/M = matrix()
 	M.Scale((storage_width-storage_cap_width*2+3)/32,1)
@@ -213,23 +219,27 @@
 	var/endpoint = 1
 
 	for(var/obj/item/O in storage.contents)
+		var/datum/three_part_slot/slot = new(O)
+
 		startpoint = endpoint + 1
 		endpoint += storage_width * O.get_storage_cost()/storage.max_storage_space
 
 		var/matrix/M_start = matrix()
 		var/matrix/M_continue = matrix()
 		var/matrix/M_end = matrix()
-		M_start.Translate(startpoint,0)
-		M_continue.Scale((endpoint-startpoint-stored_cap_width*2)/32,1)
-		M_continue.Translate(startpoint+stored_cap_width+(endpoint-startpoint-stored_cap_width*2)/2 - 16,0)
-		M_end.Translate(endpoint-stored_cap_width,0)
-		stored_start.transform = M_start
-		stored_continue.transform = M_continue
-		stored_end.transform = M_end
-		storage_start.overlays += stored_start
-		storage_start.overlays += stored_continue
-		storage_start.overlays += stored_end
+		M_start.Translate(startpoint, 0)
+		M_continue.Scale((endpoint-startpoint-stored_cap_width*2)/32, 1)
+		M_continue.Translate(startpoint+stored_cap_width+(endpoint-startpoint-stored_cap_width*2)/2 - 16, 0)
+		M_end.Translate(endpoint-stored_cap_width, 0)
 
+		slot.set_screen_loc(storage_start.screen_loc)
+		slot.set_transforms(M_start, M_continue, M_end)
+		slot.set_layer(ABOVE_HUD_LAYER)
+
+		O.pixel_w = 0
+		O.pixel_x = 0
+		O.pixel_y = 0
+		O.pixel_z = 0
 		O.screen_loc = "4:[round((startpoint+endpoint)/2)+2],2:16"
 		O.maptext = ""
 		O.hud_layerise()
