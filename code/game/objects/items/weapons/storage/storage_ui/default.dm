@@ -1,14 +1,14 @@
-/datum/three_part_slot/set_transforms(var/transform_start, var/transform_continue, var/transform_end)
+/datum/three_part_slot/default/set_transforms(var/transform_start, var/transform_continue, var/transform_end)
 	src.stored_start.transform = transform_start
 	src.stored_continue.transform = transform_continue
 	src.stored_end.transform = transform_end
 
-/datum/three_part_slot/set_layer(var/layer)
+/datum/three_part_slot/default/set_layer(var/layer)
 	src.stored_start.layer = layer
 	src.stored_continue.layer = layer
 	src.stored_end.layer = layer
 
-/datum/three_part_slot/set_screen_loc(var/screen_loc)
+/datum/three_part_slot/default/set_screen_loc(var/screen_loc)
 	src.stored_start.screen_loc = screen_loc
 	src.stored_continue.screen_loc = screen_loc
 	src.stored_end.screen_loc = screen_loc
@@ -205,7 +205,7 @@
 	var/stored_cap_width = 4 //length of sprite for start and end of the box representing the stored item
 	var/storage_width = min(round(224 * storage.max_storage_space/baseline_max_storage_space, 1), 284) //length of sprite for the box representing total storage space
 
-	storage_slots.Cut()
+	QDEL_LIST_ASSOC_VAL(storage_slots)
 
 	var/matrix/M = matrix()
 	M.Scale((storage_width-storage_cap_width*2+3)/32,1)
@@ -219,7 +219,7 @@
 	var/endpoint = 1
 
 	for(var/obj/item/O in storage.contents)
-		var/datum/three_part_slot/slot = new(O)
+		var/datum/three_part_slot/default/slot = new(O)
 
 		startpoint = endpoint + 1
 		endpoint += storage_width * O.get_storage_cost()/storage.max_storage_space
