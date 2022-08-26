@@ -6,8 +6,6 @@
 
 /datum/three_part_slot/New(var/item)
 	..()
-	src.item = item
-
 	stored_start = new()
 	stored_start.icon_state = "stored_start"
 	stored_continue = new()
@@ -21,6 +19,12 @@
 	QDEL_NULL(stored_continue)
 	QDEL_NULL(stored_end)
 	. = ..()
+
+/datum/three_part_slot/proc/set_item(var/item)
+	src.item = item
+	src.stored_start.master = item
+	src.stored_continue.master = item
+	src.stored_end.master = item
 
 /datum/three_part_slot/proc/set_screen_loc(var/screen_loc)
 	return

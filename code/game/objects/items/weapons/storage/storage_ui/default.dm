@@ -219,7 +219,9 @@
 	var/endpoint = 1
 
 	for(var/obj/item/O in storage.contents)
-		var/datum/three_part_slot/default/slot = new(O)
+		var/datum/three_part_slot/default/slot = /datum/three_part_slot/default
+		storage_slots += slot
+		slot.set_item(O)
 
 		startpoint = endpoint + 1
 		endpoint += storage_width * O.get_storage_cost()/storage.max_storage_space
