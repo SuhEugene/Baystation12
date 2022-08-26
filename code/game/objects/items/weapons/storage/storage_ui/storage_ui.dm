@@ -10,13 +10,10 @@
 
 	stored_start = new()
 	stored_start.icon_state = "stored_start"
-	stored_start.layer = HUD_BASE_LAYER
 	stored_continue = new()
 	stored_continue.icon_state = "stored_continue"
-	stored_continue.layer = HUD_BASE_LAYER
 	stored_end = new()
 	stored_end.icon_state = "stored_end"
-	stored_end.layer = HUD_BASE_LAYER
 
 /datum/three_part_slot/Destroy()
 	item = null
