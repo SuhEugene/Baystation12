@@ -15,7 +15,7 @@
 
 /datum/storage_ui/default
 	var/list/is_seeing = new/list() //List of mobs which are currently seeing the contents of this item's storage
-	var/list/storage_slots = new/list() //List of /datum/storage_slot/default to delete when ui closed
+	var/list/storage_part_slots = new/list() //List of /datum/three_part_slot/default to delete when ui closed
 
 	var/obj/screen/storage/boxes
 	var/obj/screen/storage/storage_start //storage UI
@@ -123,7 +123,7 @@
 	is_seeing -= user
 	if(!user.client)
 		return
-	user.client.screen -= storage_slots
+	user.client.screen -= storage_part_slots
 	user.client.screen -= boxes
 	user.client.screen -= storage_start
 	user.client.screen -= storage_continue
@@ -205,7 +205,11 @@
 	var/stored_cap_width = 4 //length of sprite for start and end of the box representing the stored item
 	var/storage_width = min(round(224 * storage.max_storage_space/baseline_max_storage_space, 1), 284) //length of sprite for the box representing total storage space
 
-	QDEL_LIST_ASSOC_VAL(storage_slots)
+	QDEL_LIST_ASSOC_VAL(storage_part_slots)
+
+	if (storage_part_slots == null)
+		world.log << "IT IS NULL!!!"
+		storage_part_slots = new/list()
 
 	var/matrix/M = matrix()
 	M.Scale((storage_width-storage_cap_width*2+3)/32,1)
@@ -219,8 +223,8 @@
 	var/endpoint = 1
 
 	for(var/obj/item/O in storage.contents)
-		var/datum/three_part_slot/default/slot = /datum/three_part_slot/default
-		storage_slots += slot
+		var/datum/three_part_slot/default/slot = new()
+		storage_part_slots.Add(slot)
 		slot.set_item(O)
 
 		startpoint = endpoint + 1
