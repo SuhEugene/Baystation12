@@ -178,6 +178,8 @@
 		adir = assailant.dir
 		affecting.set_dir(assailant.dir)
 
+	affecting.reset_plane_and_layer()
+
 	switch(adir)
 		if(NORTH)
 			animate(affecting, pixel_x = 0, pixel_y =-shift, 5, 1, LINEAR_EASING)
@@ -192,7 +194,6 @@
 			animate(affecting, pixel_x =-shift, pixel_y = 0, 5, 1, LINEAR_EASING)
 			G.draw_affecting_under()
 
-	affecting.reset_plane_and_layer()
 
 /datum/grab/proc/reset_position(var/obj/item/grab/G)
 	var/mob/living/carbon/human/affecting = G.affecting
