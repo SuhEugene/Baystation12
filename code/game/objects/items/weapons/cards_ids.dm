@@ -444,7 +444,7 @@ var/const/NO_EMAG_ACT = -50
 /obj/item/card/id/centcom/NtPass
 
 /obj/item/card/id/centcom/NtPass/New()
-	access = get_all_centcom_access() | access_iaa
+	access = get_all_centcom_access()
 	..()
 
 /obj/item/card/id/centcom/NtPass/station/New()
@@ -456,7 +456,7 @@ var/const/NO_EMAG_ACT = -50
 	assignment = "Emergency Response Team"
 
 /obj/item/card/id/centcom/ERT/New()
-	access = get_all_station_access() | access_cent_general | access_iaa
+	access = get_all_station_access() | access_cent_general
 	..()
 
 /obj/item/card/id/centcom/ERT/commando/New()

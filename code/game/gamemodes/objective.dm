@@ -260,11 +260,6 @@ var/global/list/all_objectives = list()
 		"плату блюспейс двигателя"				= /obj/item/stock_parts/circuitboard/bluespacedrive,
 		"плату экстренного блюспейс реле"		= /obj/item/stock_parts/circuitboard/bluespacerelay,
 		"ИКС Директора Исследований"			= /obj/item/rig/hazmat/equipped,
-		"ИКС Капитана"							= /obj/item/rig/command/captain/equipped,
-		"ИКС Главы Службы Безопасности"			= /obj/item/rig/command/hos/equipped,
-		"ИКС Главы Персонала"					= /obj/item/rig/command/hop/equipped,
-		"ИКС Старшего Медицинского Офицера"		= /obj/item/rig/command/cmo/equipped,
-		"ИКС Старшего Инженера"					= /obj/item/rig/ce/equipped,
 		"Новое Аресианское Винтажное у Главы Персонала"   = /obj/item/reagent_containers/food/drinks/bottle/lordaniawine,
 		"карманное устройство телепортации"		= /obj/item/device/electronic_assembly/medium/default,
 		"диск ядерной аутентификации"			= /obj/item/disk/nuclear
@@ -526,7 +521,7 @@ var/global/list/all_objectives = list()
 	explanation_text = "Перезаписать все исследования на съемный носитель."
 
 /datum/objective/nuclear/kidnap
-	var/list/roles = list(/datum/job/captain, /datum/job/rd, /datum/job/scientist, /datum/job/chief_engineer, /datum/job/iaa, /datum/job/hos, /datum/job/hop, /datum/job/cmo)
+	var/list/roles = list(/datum/job/captain, /datum/job/rd, /datum/job/scientist, /datum/job/chief_engineer, /datum/job/hos, /datum/job/hop, /datum/job/cmo)
 
 /datum/objective/nuclear/kidnap/proc/choose_target()
 	var/list/possible_targets = list()

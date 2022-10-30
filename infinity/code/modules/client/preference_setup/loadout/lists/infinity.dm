@@ -303,14 +303,13 @@
 /datum/gear/uniform/retro_security
 	display_name = "retro security officer's uniform"
 	allowed_roles = list(\
-	/datum/job/hos, /datum/job/warden, /datum/job/detective, /datum/job/officer, /datum/job/security_assistant)
+	/datum/job/hos, /datum/job/warden, /datum/job/detective, /datum/job/officer)
 	path = /obj/item/clothing/under/inf/retro/security
 
 /datum/gear/uniform/retro_medical
 	display_name = "retro medical officer's uniform"
 	allowed_roles = list(\
 	/datum/job/cmo, /datum/job/senior_doctor, /datum/job/doctor,\
-	/datum/job/doctor_trainee, /datum/job/explorer_medic,\
 	/datum/job/psychiatrist, /datum/job/chemist, /datum/job/roboticist)
 	path = /obj/item/clothing/under/inf/retro/medical
 
