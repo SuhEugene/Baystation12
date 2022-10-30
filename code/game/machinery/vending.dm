@@ -89,6 +89,7 @@
 	if(product_ads)
 		ads_list += splittext(product_ads, ";")
 
+	update_icon()
 	build_inventory(populate_parts)
 
 /**
@@ -669,6 +670,36 @@
 	product_ads = "Drink up!;Booze is good for you!;Alcohol is humanity's best friend.;Quite delighted to serve you!;Care for a nice, cold beer?;Nothing cures you like booze!;Have a sip!;Have a drink!;Have a beer!;Beer is good for you!;Only the finest alcohol!;Best quality booze since 2053!;Award-winning wine!;Maximum alcohol!;Man loves beer.;A toast for progress!"
 	req_access = list(access_bar)
 	base_type = /obj/machinery/vending/boozeomat
+
+/obj/machinery/vending/wallbartender
+	name = "\improper Glass-o-Mat"
+	desc = "A wall-mounted glass storage."
+	product_ads = "Free glasses!;Lets try something new.;Only the finest glasses.;Natural booze!;This stuff saves no lives.;Don't you want some?"
+	icon_state = "wallbartender"
+	icon_deny = "wallbartender-deny"
+	icon_vend = "wallbartender-vend"
+	base_type = /obj/machinery/vending/wallbartender
+	density = FALSE //It is wall-mounted, and thus, not dense. --Superxpdude
+	products = list(
+					/obj/item/reagent_containers/food/drinks/glass2/square = 10,
+					/obj/item/reagent_containers/food/drinks/glass2/shot = 5,
+					/obj/item/reagent_containers/food/drinks/glass2/cocktail = 5,
+					/obj/item/reagent_containers/food/drinks/glass2/rocks = 5,
+					/obj/item/reagent_containers/food/drinks/glass2/shake = 5,
+					/obj/item/reagent_containers/food/drinks/glass2/wine = 5,
+					/obj/item/reagent_containers/food/drinks/glass2/flute = 5,
+					/obj/item/reagent_containers/food/drinks/glass2/cognac = 5,
+					/obj/item/reagent_containers/food/drinks/glass2/goblet = 5,
+					/obj/item/reagent_containers/food/drinks/glass2/mug = 5,
+					/obj/item/reagent_containers/food/drinks/glass2/pint = 5,
+					)
+
+	contraband = list(
+					  /obj/item/reagent_containers/food/drinks/glass2/pineapple = 3,
+					  /obj/item/reagent_containers/food/drinks/glass2/coconut = 3,
+					  /obj/item/reagent_containers/food/drinks/glass2/coffeecup/diona = 1
+					  )
+	req_access = list(access_bar)
 
 /obj/machinery/vending/assist
 	products = list(

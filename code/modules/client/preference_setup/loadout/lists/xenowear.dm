@@ -15,44 +15,70 @@
 	path = /obj/item/clothing/suit/unathi/robe
 
 /datum/gear/suit/unathi/officer_uniform
-	display_name = "(Unathi) security uniform"
+	display_name = "(Unathi) large security uniform"
 	path = /obj/item/clothing/under/security/officer
 	allowed_roles = list(/datum/job/hos, /datum/job/warden, /datum/job/officer, /datum/job/detective, /datum/job/security_assistant)
 	cost = 1
+	slot = slot_w_uniform
 
 /datum/gear/suit/unathi/desert_uniform
 	display_name = "(Unathi) desert uniform"
 	path = /obj/item/clothing/under/security/desert
 	cost = 1
-
+	slot = slot_w_uniform
+/datum/gear/suit/unathi/paramedic_uniform
+	display_name = "(Unathi) first responder uniform"
+	path = /obj/item/clothing/under/medic/paramedic
+	cost = 1
+	slot = slot_w_uniform
+/datum/gear/suit/unathi/unathi_work
+	display_name = "(Unathi) sturdy uniform"
+	path = /obj/item/clothing/under/unathi_work
+	cost = 1
+	slot = slot_w_uniform
 /datum/gear/suit/unathi/security_cap
-	display_name = "(Unathi) security cap"
+	display_name = "(Unathi) big security cap"
 	path = /obj/item/clothing/head/cap/sec
 	allowed_roles = list(/datum/job/hos, /datum/job/warden, /datum/job/officer, /datum/job/detective, /datum/job/security_assistant)
 	cost = 1
-
+	slot = slot_head
 /datum/gear/suit/unathi/desert_cap
-	display_name = "(Unathi) desert cap"
+	display_name = "(Unathi) suncap"
 	path = /obj/item/clothing/head/cap/desert
 	cost = 1
-
+	slot = slot_head
 
 /datum/gear/suit/unathi/desert_shoes
-	display_name = "(Unathi) desert shoes"
+	display_name = "(Unathi) large duty boots"
 	path = /obj/item/clothing/shoes/desert
 	cost = 1
-
+	slot = slot_shoes
 /datum/gear/suit/unathi/security_shoes
 	display_name = "(Unathi) security shoes"
 	path = /obj/item/clothing/shoes/security
 	cost = 1
+	slot = slot_shoes
+
+/datum/gear/suit/unathi/footwraps
+	display_name = "(Unathi) big footwraps"
+	path = /obj/item/clothing/shoes/unathi/footwraps
+	cost = 1
+	slot = slot_shoes
+	flags = GEAR_HAS_COLOR_SELECTION
+
+/datum/gear/suit/unathi/sandals
+	display_name = "(Unathi) unathi sandals"
+	path = /obj/item/clothing/shoes/unathi/sandals
+	cost = 1
+	slot = slot_shoes
+	flags = GEAR_HAS_COLOR_SELECTION
 
 /datum/gear/suit/unathi/security_jacket
 	display_name = "(Unathi) security jacket"
 	path = /obj/item/clothing/suit/storage/security
 	allowed_roles = list(/datum/job/hos, /datum/job/warden, /datum/job/officer, /datum/job/detective, /datum/job/security_assistant)
 	cost = 1
-
+	slot = slot_wear_suit
 /datum/gear/suit/unathi/knifeharness
 	display_name = "(Unathi) decorated knife harness"
 	path = /obj/item/clothing/accessory/storage/knifeharness
@@ -67,6 +93,7 @@
 	display_name = "(Unathi) savage hunter female hides"
 	path = /obj/item/clothing/under/savage_hunter/female
 	slot = slot_w_uniform
+
 
 //Skrell Chains
 /datum/gear/ears/skrell/
@@ -121,12 +148,6 @@
 	sort_category = "Xenowear"
 
 // IPC clothing
-/datum/gear/mask/ipc_monitor
-	display_name = "(IPC) display monitor"
-	path = /obj/item/clothing/mask/monitor
-	sort_category = "Xenowear"
-	whitelisted = list(SPECIES_IPC)
-
 /datum/gear/suit/lab_xyn_machine
 	display_name = "Xynergy labcoat" //INF, WAS "(IPC) Xynergy labcoat"
 	path = /obj/item/clothing/suit/storage/toggle/labcoat/xyn_machine
