@@ -2626,7 +2626,7 @@
 	},
 /area/centcom/living)
 "auK" = (
-/obj/structure/closet/secure_closet/bar{
+/obj/structure/closet/secure_closet/cabinet/bar{
 	req_access = list("ACCESS_BAR")
 	},
 /turf/unsimulated/floor{
@@ -6466,7 +6466,7 @@
 /turf/simulated/floor/shuttle/blue,
 /area/shuttle/transport1/centcom)
 "aIh" = (
-/obj/structure/closet/secure_closet/bar{
+/obj/structure/closet/secure_closet/cabinet/bar{
 	req_access = list("ACCESS_BAR")
 	},
 /turf/unsimulated/floor{
@@ -7047,7 +7047,7 @@
 /turf/simulated/floor/shuttle/blue,
 /area/shuttle/transport1/centcom)
 "aKa" = (
-/obj/structure/closet/secure_closet/bar,
+/obj/structure/closet/secure_closet/cabinet/bar,
 /turf/unsimulated/floor{
 	icon_state = "white"
 	},

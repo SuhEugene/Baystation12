@@ -1247,7 +1247,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_y = -32
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{

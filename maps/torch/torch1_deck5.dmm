@@ -1249,7 +1249,7 @@
 /turf/simulated/floor/tiled,
 /area/exploration_shuttle/crew)
 "cv" = (
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_x = 32
 	},
 /obj/random/firstaid,
@@ -14732,7 +14732,7 @@
 /turf/simulated/floor/tiled/monotile,
 /area/quartermaster/storage)
 "MW" = (
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_y = 32
 	},
 /obj/machinery/light/small{

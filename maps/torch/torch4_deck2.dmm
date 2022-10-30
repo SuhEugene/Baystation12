@@ -6303,7 +6303,7 @@
 /turf/simulated/floor/tiled/techfloor/grid,
 /area/engineering/locker_room)
 "nA" = (
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_x = 0;
 	pixel_y = -32
 	},

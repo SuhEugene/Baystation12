@@ -11152,7 +11152,7 @@
 /area/maintenance/firstdeck/foreport)
 "aLU" = (
 /obj/structure/table/standard,
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_x = -32
 	},
 /obj/machinery/recharger{
@@ -15767,7 +15767,7 @@
 	icon_state = "techfloor_edges"
 	},
 /obj/structure/bed/chair/padded/blue,
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_x = 0;
 	pixel_y = 32
 	},
@@ -21588,7 +21588,7 @@
 	pixel_x = -23;
 	pixel_y = 0
 	},
-/obj/structure/closet/walllocker/fireclosetker/firecloset{
+/obj/structure/closet/walllocker/firecloset{
 	pixel_y = 32
 	},
 /turf/simulated/floor/tiled/white/monotile,
@@ -22369,7 +22369,7 @@
 /area/medical/sleeper)
 "lAC" = (
 /obj/structure/table/standard,
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_x = 0;
 	pixel_y = 32
 	},
@@ -25090,7 +25090,7 @@
 	dir = 10;
 	icon_state = "corner_white"
 	},
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_x = 0;
 	pixel_y = -32
 	},
@@ -28195,7 +28195,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_y = -32
 	},
 /turf/simulated/floor/tiled,

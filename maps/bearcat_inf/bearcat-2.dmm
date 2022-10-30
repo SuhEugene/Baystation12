@@ -955,7 +955,7 @@
 /turf/simulated/floor/tiled,
 /area/ship/scrap/engineering)
 "bJ" = (
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_y = -24;
 	req_access = list("ACCESS_MEDICAL_EQUIP")
 	},
@@ -2412,7 +2412,7 @@
 /obj/item/storage/pill_bottle/kelotane,
 /obj/item/storage/pill_bottle/spaceacillin,
 /obj/item/storage/pill_bottle/bicaridine,
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_y = -24;
 	req_access = list("ACCESS_MEDICAL_EQUIP")
 	},

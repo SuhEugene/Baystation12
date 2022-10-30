@@ -187,7 +187,7 @@
 "aM" = (
 /obj/effect/decal/cleanable/vomit,
 /obj/item/reagent_containers/glass/paint/random,
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/blue2,

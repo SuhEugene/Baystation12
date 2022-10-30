@@ -9241,7 +9241,7 @@
 /turf/simulated/floor/tiled,
 /area/hallway/primary/thirddeck/aft)
 "tT" = (
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_x = -32
 	},
 /turf/simulated/floor/tiled/monotile,
@@ -12478,7 +12478,7 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_x = 32
 	},
 /obj/effect/floor_decal/techfloor{
@@ -18605,7 +18605,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_y = -32
 	},
 /turf/simulated/floor/tiled/white,

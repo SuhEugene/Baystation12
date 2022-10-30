@@ -1063,7 +1063,7 @@
 /turf/simulated/floor/wood/yew,
 /area/yacht/living)
 "df" = (
-/obj/structure/closet/secure_closet/bar,
+/obj/structure/closet/secure_closet/cabinet/bar,
 /turf/simulated/floor/plating,
 /area/yacht/engine)
 "dg" = (

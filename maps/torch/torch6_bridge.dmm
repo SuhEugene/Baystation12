@@ -13853,7 +13853,7 @@
 	dir = 4;
 	icon_state = "chair_preview"
 	},
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_x = -32
 	},
 /obj/random/firstaid,

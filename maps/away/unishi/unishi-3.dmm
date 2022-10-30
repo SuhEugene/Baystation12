@@ -595,7 +595,7 @@
 /turf/simulated/floor/tiled/white,
 /area/unishi/med)
 "bS" = (
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_y = 32
 	},
 /obj/structure/closet/secure_closet/medical1{

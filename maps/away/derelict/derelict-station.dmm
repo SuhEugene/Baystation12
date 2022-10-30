@@ -2391,7 +2391,7 @@
 /turf/simulated/floor/airless,
 /area/constructionsite/medical)
 "hS" = (
-/obj/structure/closet/medical_wall/filled{
+/obj/structure/closet/walllocker/medical/filled{
 	pixel_x = 32
 	},
 /turf/simulated/floor/airless,
