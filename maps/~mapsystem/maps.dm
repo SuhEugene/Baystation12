@@ -348,8 +348,6 @@ var/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 
 
 /datum/map/proc/build_away_sites()
-	testing("SKIP FUCKIN MAPPING")
-	return
 #ifdef UNIT_TEST
 	report_progress("Unit testing, so not loading away sites")
 	return // don't build away sites during unit testing
