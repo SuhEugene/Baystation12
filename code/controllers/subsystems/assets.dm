@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(assets)
 	name = "Assets"
-	init_order = INIT_ORDER_ASSETS
+	init_order = SS_INIT_ASSETS
 	flags = SS_NO_FIRE
 	var/list/cache = list()
 	var/list/preload = list()
@@ -10,7 +10,7 @@ SUBSYSTEM_DEF(assets)
 		var/datum/asset/A = new type()
 		A.register()
 
-	preload = cache.Copy() //don't preload assets generated during the round
+	preload = cache.Copy()
 
 	for(var/client/C in GLOB.clients)
 		addtimer(CALLBACK(GLOBAL_PROC, .proc/getFilesSlow, C, preload, FALSE), 10)

@@ -294,6 +294,15 @@ var/list/_client_preferences_by_type
 	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
 	default_value = GLOB.PREF_NO
 
+/datum/client_preference/tgui_fancy
+	description = "Fancy TGUI"
+	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
+
+/datum/client_preference/tgui_lock
+	description = "Lock TGUI"
+	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
+	default_value = GLOB.PREF_NO
+
 /datum/client_preference/goonchat
 	description = "Use Goon Chat"
 	key = "USE_GOONCHAT"
