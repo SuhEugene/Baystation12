@@ -28,7 +28,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/tmp/iconCache.sav")) //Cache o
 	connectionHistory = list()
 
 /datum/chatOutput/proc/start()
-	testing("ASS Starting chat [owner.ckey]")
 	//Check for existing chat
 	if(!owner)
 		return FALSE
@@ -43,11 +42,9 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/tmp/iconCache.sav")) //Cache o
 
 	//It seems if someone disconnects while loading this can runtime, so we have to check for owner again
 	if(owner && winget(owner, "browseroutput", "is-visible") == "true") //Already setup
-		testing("ASS Chat alrady started [owner.ckey]")
 		doneLoading()
 
 	else //Not setup
-		testing("ASS Calling load [owner.ckey]")
 		load()
 
 	return TRUE
@@ -102,7 +99,6 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("data/tmp/iconCache.sav")) //Cache o
 
 //Called on chat output done-loading by JS.
 /datum/chatOutput/proc/doneLoading()
-	testing("ASS Got loaded [owner.ckey]")
 	if(loaded)
 		return
 

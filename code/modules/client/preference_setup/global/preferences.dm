@@ -296,10 +296,12 @@ var/list/_client_preferences_by_type
 
 /datum/client_preference/tgui_fancy
 	description = "Fancy TGUI"
+	key = "TGUI_FANCY"
 	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
 
 /datum/client_preference/tgui_lock
 	description = "Lock TGUI"
+	key = "TGUI_LOCK"
 	options = list(GLOB.PREF_YES, GLOB.PREF_NO)
 	default_value = GLOB.PREF_NO
 
