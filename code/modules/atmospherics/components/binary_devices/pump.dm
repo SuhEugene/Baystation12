@@ -45,7 +45,7 @@ Thus, the two variables affect pump operation are set in New():
 	)
 	public_methods = list(
 		/decl/public_access/public_method/toggle_power,
-		/decl/public_access/public_method/refresh	
+		/decl/public_access/public_method/refresh
 	)
 	stock_part_presets = list(
 		/decl/stock_part_preset/radio/receiver/pump = 1,
@@ -120,10 +120,50 @@ Thus, the two variables affect pump operation are set in New():
 	else
 		return air2
 
-/obj/machinery/atmospherics/binary/pump/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/machinery/atmospherics/binary/pump/tgui_interact(mob/user, datum/tgui/ui)
 	if(stat & (BROKEN|NOPOWER))
 		return
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "GasPump", name)
+		ui.open()
 
+/obj/machinery/atmospherics/binary/pump/attack_ghost(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/atmospherics/binary/pump/attack_hand(mob/user)
+	if(..())
+		return
+	add_fingerprint(usr)
+	if(!allowed(user))
+		to_chat(user, "<span class='warning'>Access denied.</span>")
+		return
+	tgui_interact(user)
+
+/obj/machinery/atmospherics/binary/pump/tgui_act(action, params)
+	if(..())
+		return TRUE
+
+	switch(action)
+		if("power")
+			update_use_power(!use_power)
+			. = TRUE
+		if("set_press")
+			var/press = params["press"]
+			switch(press)
+				if("min")
+					target_pressure = 0
+				if("max")
+					target_pressure = max_pressure_setting
+				if("set")
+					var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure_setting]kPa)","Pressure control",src.target_pressure) as num
+					src.target_pressure = between(0, new_pressure, max_pressure_setting)
+			. = TRUE
+
+	add_fingerprint(usr)
+	update_icon()
+
+/obj/machinery/atmospherics/binary/pump/tgui_data(mob/user)
 	// this is the data which will be sent to the ui
 	var/data[0]
 
@@ -136,41 +176,7 @@ Thus, the two variables affect pump operation are set in New():
 		"max_power_draw" = power_rating,
 	)
 
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)
-		// the ui does not exist, so we'll create a new() one
-		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
-		ui = new(user, src, ui_key, "gas_pump.tmpl", name, 470, 290)
-		ui.set_initial_data(data)	// when the ui is first opened this is the data it will use
-		ui.open()					// open the new ui window
-		ui.set_auto_update(1)		// auto update every Master Controller tick
-
-/obj/machinery/atmospherics/binary/pump/interface_interact(mob/user)
-	ui_interact(user)
-	return TRUE
-
-/obj/machinery/atmospherics/binary/pump/Topic(href,href_list)
-	if((. = ..())) return
-
-	if(href_list["power"])
-		update_use_power(!use_power)
-		. = 1
-
-	switch(href_list["set_press"])
-		if ("min")
-			target_pressure = 0
-			. = 1
-		if ("max")
-			target_pressure = max_pressure_setting
-			. = 1
-		if ("set")
-			var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure_setting]kPa)","Pressure control",src.target_pressure) as num
-			src.target_pressure = between(0, new_pressure, max_pressure_setting)
-			. = 1
-
-	if(.)
-		src.update_icon()
+	return data
 
 /obj/machinery/atmospherics/binary/pump/cannot_transition_to(state_path, mob/user)
 	if(state_path == /decl/machine_construction/default/deconstructed)

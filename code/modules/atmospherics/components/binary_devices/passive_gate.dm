@@ -173,6 +173,9 @@
 	update_icon()
 	return
 
+/obj/machinery/atmospherics/binary/passive_gate/attack_ghost(mob/user)
+	tgui_interact(user)
+
 /obj/machinery/atmospherics/binary/passive_gate/physical_attack_hand(user as mob)
 	if(..())
 		return

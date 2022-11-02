@@ -127,28 +127,26 @@ GLOBAL_LIST_INIT(filter_mode_to_gas_id, list( \
 
 	return 1
 
-/obj/machinery/atmospherics/omni/filter/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
-	if(!user)
-		if (ui)
-			ui.close()
+/obj/machinery/atmospherics/omni/filter/attack_ghost(mob/user)
+	tgui_interact(user)
+
+/obj/machinery/atmospherics/omni/filter/physical_attack_hand(user as mob)
+	if(..())
 		return
+	add_fingerprint(usr)
+	if(!allowed(user))
+		to_chat(user, "<span class='warning'>Access denied.</span>")
+		return
+	tgui_interact(user)
 
-	user.set_machine(src)
-
-	var/list/data = new()
-
-	data = build_uidata()
-
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
-
-	if (!ui)
-		ui = new(user, src, ui_key, "omni_filter.tmpl", "Omni Filter Control", 330, 330)
-		ui.set_initial_data(data)
-
+/obj/machinery/atmospherics/omni/filter/tgui_interact(mob/user,datum/tgui/ui = null)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "OmniFilter", name)
 		ui.open()
 
-/obj/machinery/atmospherics/omni/filter/proc/build_uidata()
-	var/list/data = new()
+/obj/machinery/atmospherics/omni/filter/tgui_data(mob/user)
+	var/list/data = list()
 
 	data["power"] = use_power
 	data["config"] = configuring
@@ -160,22 +158,22 @@ GLOBAL_LIST_INIT(filter_mode_to_gas_id, list( \
 
 		var/input = 0
 		var/output = 0
-		var/is_filter = 1
+		var/atmo_filter = 1
 		var/f_type = null
 		switch(P.mode)
 			if(ATM_INPUT)
 				input = 1
-				is_filter = 0
+				atmo_filter = 0
 			if(ATM_OUTPUT)
 				output = 1
-				is_filter = 0
-			if(ATM_GAS_MIN to ATM_GAS_MAX)
+				atmo_filter = 0
+			if(ATM_O2 to ATM_N2O)
 				f_type = mode_send_switch(P.mode)
 
 		portData[++portData.len] = list("dir" = dir_name(P.dir, capitalize = 1), \
 										"input" = input, \
 										"output" = output, \
-										"filter" = is_filter, \
+										"atmo_filter" = atmo_filter, \
 										"f_type" = f_type)
 
 	if(portData.len)
@@ -189,34 +187,43 @@ GLOBAL_LIST_INIT(filter_mode_to_gas_id, list( \
 /obj/machinery/atmospherics/omni/filter/proc/mode_send_switch(var/mode = ATM_NONE)
 	return GLOB.filter_mode_to_gas["[mode]"]
 
-/obj/machinery/atmospherics/omni/filter/Topic(href, href_list)
-	if(..()) return 1
-	switch(href_list["command"])
+/obj/machinery/atmospherics/omni/filter/tgui_act(action, params)
+	if(..())
+		return TRUE
+
+	switch(action)
 		if("power")
 			if(!configuring)
 				update_use_power(!use_power)
 			else
 				update_use_power(POWER_USE_OFF)
+			. = TRUE
 		if("configure")
 			configuring = !configuring
 			if(configuring)
 				update_use_power(POWER_USE_OFF)
-
-	//only allows config changes when in configuring mode ~otherwise you'll get weird pressure stuff going on
-	if(configuring && !use_power)
-		switch(href_list["command"])
-			if("set_flow_rate")
-				var/new_flow_rate = input(usr,"Enter new flow rate limit (0-[max_flow_rate]L/s)","Flow Rate Control",set_flow_rate) as num
-				set_flow_rate = between(0, new_flow_rate, max_flow_rate)
-			if("switch_mode")
-				switch_mode(dir_flag(href_list["dir"]), mode_return_switch(href_list["mode"]))
-			if("switch_filter")
-				var/new_filter = input(usr,"Select filter mode:","Change filter",href_list["mode"]) in GLOB.filter_gas_to_mode
-				switch_filter(dir_flag(href_list["dir"]), mode_return_switch(new_filter))
+			. = TRUE
+		if("set_flow_rate")
+			if(!configuring || use_power)
+				return
+			var/new_flow_rate = input(usr,"Enter new flow rate limit (0-[max_flow_rate]L/s)","Flow Rate Control",set_flow_rate) as num
+			set_flow_rate = between(0, new_flow_rate, max_flow_rate)
+			. = TRUE
+		if("switch_mode")
+			if(!configuring || use_power)
+				return
+			switch_mode(dir_flag(params["dir"]), mode_return_switch(params["mode"]))
+			. = TRUE
+		if("switch_filter")
+			if(!configuring || use_power)
+				return
+			var/new_filter = input(usr,"Select filter mode:","Change filter",GLOB.filter_gas_to_mode) in GLOB.filter_gas_to_mode
+			if(!new_filter)
+				return
+			switch_filter(dir_flag(params["dir"]), mode_return_switch(new_filter))
+			. = TRUE
 
 	update_icon()
-	SSnano.update_uis(src)
-	return
 
 /obj/machinery/atmospherics/omni/filter/proc/mode_return_switch(var/mode)
 	. = GLOB.filter_gas_to_mode[mode]
