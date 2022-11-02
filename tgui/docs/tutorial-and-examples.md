@@ -5,10 +5,10 @@
 Basic tgui backend code consists of the following vars and procs:
 
 ```
-tgui_interact(mob/user, ui_key, datum/tgui/ui, force_open,
-  datum/tgui/master_ui, datum/tgui_state/state)
+tgui_interact(mob/user, datum/tgui/ui)
 tgui_data(mob/user)
 tgui_act(action, params)
+tgui_state()
 ```
 
 - `src_object` - The atom, which UI corresponds to in the game world.
@@ -19,9 +19,9 @@ or set up a new instance of UI by calling the `SStgui` subsystem.
 has into an associative list, which will then be sent to UI as a JSON string.
 - `tgui_act` - This proc receives user actions and reacts to them by changing
 the state of the game.
-- `tgui_state` (set in `tgui_interact`) - This var dictates under what conditions
-a UI may be interacted with. This may be the standard checks that check if
-you are in range and conscious, or more.
+- `tgui_state` - This proc dictates under what conditions a UI may be interacted
+with. This may be the standard checks that check if you are in range and
+conscious, or more.
 
 Once backend is complete, you create an new interface component on the
 frontend, which will receive this JSON data and render it on screen.
@@ -37,10 +37,10 @@ powerful interactions for embedded objects or remote access.
 Let's start with a very basic hello world.
 
 ```dm
-/obj/machinery/my_machine/tgui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/tgui_state/state = GLOB.tgui_default_state)
-  ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/machinery/my_machine/tgui_interact(mob/user, datum/tgui/ui)
+  ui = SStgui.try_update_ui(user, src, ui)
   if(!ui)
-    ui = new(user, src, ui_key, "my_machine", name, 300, 300, master_ui, state)
+    ui = new(user, src, "MyMachine")
     ui.open()
 ```
 
@@ -48,14 +48,12 @@ This is the proc that defines our interface. There's a bit going on here, so
 let's break it down. First, we override the tgui_interact proc on our object. This
 will be called by `interact` for you, which is in turn called by `attack_hand`
 (or `attack_self` for items). `tgui_interact` is also called to update a UI (hence
-the `try_update_ui`), so we accept an existing UI to update. The `state` is a
-default argument so that a caller can overload it with named arguments
-(`tgui_interact(state = overloaded_state)`) if needed.
+the `try_update_ui`), so we accept an existing UI to update.
 
 Inside the `if(!ui)` block (which means we are creating a new UI), we choose our
 template, title, and size; we can also set various options like `style` (for
 themes), or autoupdate. These options will be elaborated on later (as will
-`ui_state`s).
+`tgui_state`s).
 
 After `tgui_interact`, we need to define `tgui_data`. This just returns a list of
 data for our object to use. Let's imagine our object has a few vars:
@@ -78,7 +76,8 @@ input. The input's `action` and `params` are passed to the proc.
 
 ```dm
 /obj/machinery/my_machine/tgui_act(action, params)
-  if(..())
+  . = ..()
+  if(.)
     return
   if(action == "change_color")
     var/new_color = params["color"]
@@ -90,13 +89,20 @@ input. The input's `action` and `params` are passed to the proc.
 ```
 
 The `..()` (parent call) is very important here, as it is how we check that the
-user is allowed to use this interface (to avoid so-called href exploits). It is
-also very important to clamp and sanitize all input here. Always assume the user
-is attempting to exploit the game.
+user is allowed to use this interface (to avoid so-called href exploits). When
+any event has been handled `..()` will return `TRUE`. It is important to clamp
+and sanitize all input here. Always assume the user is attempting to exploit the
+game.
+
+When `..()` has returned `TRUE` your interface can safely assume that the user's
+action has been handled already by some parent proc and you should not continue
+to handle this, instead preserving and returning the parent proc's return value.
 
 Also note the use of `. = TRUE` (or `FALSE`), which is used to notify the UI
-that this input caused an update. This is especially important for UIs that do
-not auto-update, as otherwise the user will never see their change.
+that this input has been handled. When `tgui_act` eventually returns, a value of
+`TRUE` indicates that the input has been handled and that the UI should update.
+This is important for UIs that do not auto-update, as otherwise the user will
+not be able to see the interface update based on thier actions.
 
 ### Frontend
 
@@ -158,7 +164,7 @@ Here are the key variables you get from a `useBackend(context)` function:
 interface and who uses it, BYOND refs to various objects, and so forth.
 You are rarely going to use it, but sometimes it can be used to your
 advantage when doing complex UIs.
-- `data` is the data returned from `tgui_data` and `tgui_static_data` procs in
+- `data` is the data returned from `tgui_data` and `ui_static_data` procs in
 your DM code. Pretty straight forward.
   - Note, that javascript doesn't have associative arrays, so when you
   return an associative list from DM, it will be available in `data` as a
@@ -168,7 +174,7 @@ your DM code. Pretty straight forward.
   are not available on it. Always prefer returning clean arrays from your
   code, since arrays are easier to work with in javascript!
 - `act(name, params)` is a function, which you can call to dispatch an action
-to your DM code. It will be processed in `ui_act` proc. Action name will be
+to your DM code. It will be processed in `tgui_act` proc. Action name will be
 available in `params["action"]`, mixed together with the rest of parameters
 you have passed in `params` object.
 
@@ -294,10 +300,10 @@ here's what you need (note that you'll probably be forced to clean your shit up
 upon code review):
 
 ```dm
-/obj/copypasta/tgui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = 0, datum/tgui/master_ui = null, datum/tgui_state/state = GLOB.tgui_default_state) // Remember to use the appropriate state.
-  ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+/obj/copypasta/tgui_interact(mob/user, datum/tgui/ui)
+  ui = SStgui.try_update_ui(user, src, ui)
   if(!ui)
-    ui = new(user, src, ui_key, "copypasta", name, 300, 300, master_ui, state)
+    ui = new(user, src, "copypasta")
     ui.open()
 
 /obj/copypasta/tgui_data(mob/user)
