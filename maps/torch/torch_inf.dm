@@ -1,3 +1,4 @@
+#include "../away_inf/ascent/ascent.dm"
 #include "../away/ascent_caulship/_ascent_caulship.dm"
 
 //		Non-Torch files, that requires Torch. Shame on you...
