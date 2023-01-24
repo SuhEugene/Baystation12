@@ -70,7 +70,7 @@
 
 		discount_item = new_discount_item
 		update_nano_data()
-		SSnano.update_uis(src)
+		SStgui.update_uis(src)
 
 /obj/item/device/uplink/proc/is_improper_item(var/datum/uplink_item/new_discount_item, discount_amount)
 	if(!new_discount_item)
@@ -113,8 +113,13 @@
 /*
 	NANO UI FOR UPLINK WOOP WOOP
 */
-/obj/item/device/uplink/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1, var/uistate = GLOB.inventory_state)
-	var/title = "Remote Uplink"
+/obj/item/device/uplink/tgui_interact(mob/user, datum/tgui/ui, datum/tgui/parent_ui, custom_state=GLOB.tgui_inventory_state)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "Uplink", "Remote Uplink")
+		ui.open()
+
+/obj/item/device/uplink/tgui_data(mob/user)
 	var/data[0]
 
 	data["welcome"] = welcome
@@ -127,17 +132,9 @@
 
 	data += nanoui_data
 
-	// update the ui if it exists, returns null if no ui is passed/found
-	ui = SSnano.try_update_ui(user, src, ui_key, ui, data, force_open)
-	if (!ui)	// No auto-refresh
-		ui = new(user, src, ui_key, "uplink.tmpl", title, 450, 600, state = uistate)
-		ui.set_initial_data(data)
-		ui.open()
-
-
 // Interaction code. Gathers a list of items purchasable from the paren't uplink and displays it. It also adds a lock button.
 /obj/item/device/uplink/interact(mob/user)
-	ui_interact(user)
+	tgui_interact(user)
 
 /obj/item/device/uplink/CanUseTopic()
 	if(!active)
@@ -145,27 +142,30 @@
 	return ..()
 
 // The purchasing code.
-/obj/item/device/uplink/OnTopic(user, href_list)
-	if(href_list["buy_item"])
-		var/datum/uplink_item/UI = (locate(href_list["buy_item"]) in uplink.items)
-		UI.buy(src, usr)
-		. = TOPIC_REFRESH
-	else if(href_list["lock"])
-		toggle()
-		SSnano.close_user_uis(user, src, "main")
-		. = TOPIC_HANDLED
-	else if(href_list["return"])
-		nanoui_menu = round(nanoui_menu/10)
-		. = TOPIC_REFRESH
-	else if(href_list["menu"])
-		nanoui_menu = text2num(href_list["menu"])
-		if(href_list["id"])
-			exploit_id = text2num(href_list["id"])
-		if(href_list["category"])
-			category = locate(href_list["category"]) in uplink.categories
-		. = TOPIC_REFRESH
+/obj/item/device/uplink/tgui_act(action, list/params)
+	UI_ACT_CHECK
 
-	if(. == TOPIC_REFRESH)
+	switch (action)
+		if("buy_item")
+			var/datum/uplink_item/UI = (locate(params["buy_item"]) in uplink.items)
+			UI.buy(src, usr)
+			. = TRUE
+		if("lock")
+			toggle()
+			SStgui.close_user_uis(usr, src)
+			. = FALSE
+		if("return")
+			nanoui_menu = round(nanoui_menu/10)
+			. = TRUE
+		if("menu")
+			nanoui_menu = text2num(params["menu"])
+			if(params["id"])
+				exploit_id = text2num(params["id"])
+			if(params["category"])
+				category = locate(params["category"]) in uplink.categories
+			. = TRUE
+
+	if(. == TRUE)
 		update_nano_data()
 
 /obj/item/device/uplink/proc/update_nano_data()
