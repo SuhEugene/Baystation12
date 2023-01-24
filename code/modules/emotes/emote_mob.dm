@@ -98,7 +98,7 @@
 
 	// Grab the last character of the emote message.
 	end_char = copytext(subtext, length(subtext), length(subtext) + 1)
-	if(!(end_char in list(".", "?", "!", "\"", "-", "~"))) // gotta include ~ for all you fucking weebs
+	if(!(end_char in list(".", "?", "!", "\"", "-", "\"", "~"))) // gotta include ~ for all you fucking weebs
 		// No punctuation supplied. Tack a period on the end.
 		subtext += "."
 
