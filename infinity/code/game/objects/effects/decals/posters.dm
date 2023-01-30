@@ -457,6 +457,11 @@
 //  SS220 2023 New Year contest  //
 //  ---------------------------  //
 
+/decl/poster/nyc/New()
+	..()
+	if(!poster_type)
+		poster_type = pick(subtypesof(/decl/poster/nyc))
+
 /decl/poster/nyc/adme_midala
 	// by KandJX
 	icon_state = "adme_midala"
